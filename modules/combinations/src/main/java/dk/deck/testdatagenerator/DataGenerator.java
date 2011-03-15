@@ -5,7 +5,9 @@
 package dk.deck.testdatagenerator;
 
 import dk.deck.testdatagenerator.concurrent.ConsumerThread;
+import dk.deck.testdatagenerator.concurrent.CountDownLatchWaitable;
 import dk.deck.testdatagenerator.concurrent.ProducerThread;
+import dk.deck.testdatagenerator.concurrent.Waitable;
 import dk.deck.testdatagenerator.reflect.ReflectBeanInfo;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -137,7 +139,7 @@ public class DataGenerator<T> {
      * @param numthreads 
      * @return A handle to use if you wish to wait for the threads to finish
      */
-    public CountDownLatch generateDataConcurent(DataGenerationListener<T> listener, int numthreads, int buffersize) throws InstantiationException, IllegalAccessException {
+    public Waitable generateDataConcurent(DataGenerationListener<T> listener, int numthreads, int buffersize) throws InstantiationException, IllegalAccessException {
         // Split up the task based on the number of threads.
         // Start each thread
         // Create a countdownlatch, that waits for all threads to finish.
@@ -150,7 +152,7 @@ public class DataGenerator<T> {
             ConsumerThread consumer = new ConsumerThread(i, queue, listener, latch, poisonObject);
             consumer.start();
         }
-        return latch;
+        return new CountDownLatchWaitable(latch);
     }
 
 

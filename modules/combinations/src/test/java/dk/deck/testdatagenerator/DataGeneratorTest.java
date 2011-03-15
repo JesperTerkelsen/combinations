@@ -4,6 +4,7 @@
  */
 package dk.deck.testdatagenerator;
 
+import dk.deck.testdatagenerator.concurrent.Waitable;
 import dk.deck.testdatagenerator.model.TestBean;
 import java.util.ArrayList;
 import java.util.List;
@@ -100,14 +101,14 @@ public class DataGeneratorTest {
         values.add("emustring");
         values.add("gnustring");
         generator.setFieldValues("stringValue", values);
-        CountDownLatch latch = generator.generateDataConcurent(new DataGenerationListener<TestBean>() {
+        Waitable waitable = generator.generateDataConcurent(new DataGenerationListener<TestBean>() {
 
             public void onDataGenerated(TestBean value, int threadNum) {
                 System.out.println(threadNum + ": " + value.toString());
                 count = count + 1;
             }
         }, 5, 10);
-        latch.await();
+        waitable.await();
         int calculatedCount = generator.getNumberOfPermutations();
         System.out.println("Permutations: " + count);
         System.out.println("CalculatedCount: " + calculatedCount);
