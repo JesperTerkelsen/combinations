@@ -8,7 +8,6 @@ import dk.deck.testdatagenerator.concurrent.Waitable;
 import dk.deck.testdatagenerator.model.TestBean;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -60,7 +59,6 @@ public class DataGeneratorTest {
         List<TestBean> list = generator.generateData();
         for (TestBean testBean : list) {
             System.out.println(testBean.toString());
-
         }
         int calculatedCount = generator.getNumberOfPermutations();
         System.out.println("Permutations: " + list.size());
@@ -107,6 +105,7 @@ public class DataGeneratorTest {
                 System.out.println(threadNum + ": " + value.toString());
                 count = count + 1;
             }
+            
         }, 5, 10);
         waitable.await();
         int calculatedCount = generator.getNumberOfPermutations();
