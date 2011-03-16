@@ -83,7 +83,7 @@ public class DataGenerator<T> {
         final List<T> result = new ArrayList<T>();
         generateData(new DataGenerationListener<T>() {
 
-            public void onDataGenerated(T value, int threadNum) {
+            public void onDataGenerated(T value) {
                 result.add(value);
             }
         });
@@ -122,7 +122,7 @@ public class DataGenerator<T> {
                 Object value = fieldValuesLocal.get(property).get(fieldIndexes.get(property));
                 beanInfo.setProperty(instance, property, value);
             }
-            listener.onDataGenerated(instance, 0);
+            listener.onDataGenerated(instance);
             running = Calculation.advance(fieldIndexes, maxValues, supportedFieldsLocal);
         }
 
@@ -139,7 +139,7 @@ public class DataGenerator<T> {
      * @param numthreads 
      * @return A handle to use if you wish to wait for the threads to finish
      */
-    public Waitable generateDataConcurent(DataGenerationListener<T> listener, int numthreads, int buffersize) throws InstantiationException, IllegalAccessException {
+    public Waitable generateDataConcurrent(DataGenerationConcurrentListener<T> listener, int numthreads, int buffersize) throws InstantiationException, IllegalAccessException {
         // Split up the task based on the number of threads.
         // Start each thread
         // Create a countdownlatch, that waits for all threads to finish.

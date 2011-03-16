@@ -9,6 +9,6 @@ package dk.deck.testdatagenerator;
  *
  * @author Jesper Terkelsen
  */
-public interface DataGenerationListener<T> {
-    public void onDataGenerated(T value);
+public interface DataGenerationConcurrentListener<T> {
+    public void onDataGenerated(T value, int threadNum);
 }

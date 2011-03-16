@@ -4,6 +4,7 @@
  */
 package dk.deck.testdatagenerator.concurrent;
 
+import dk.deck.testdatagenerator.DataGenerationConcurrentListener;
 import dk.deck.testdatagenerator.DataGenerationListener;
 import dk.deck.testdatagenerator.DataGenerator;
 import java.util.concurrent.BlockingQueue;
@@ -19,11 +20,11 @@ public class ConsumerThread<T> extends Thread {
 
     private final int num;
     private final BlockingQueue<T> queue;
-    private final DataGenerationListener<T> listener;
+    private final DataGenerationConcurrentListener<T> listener;
     private final CountDownLatch latch;
     private final T poisonObject;
 
-    public ConsumerThread(int num, BlockingQueue<T> queue, DataGenerationListener<T> listener, CountDownLatch latch, T poisonObject) {
+    public ConsumerThread(int num, BlockingQueue<T> queue, DataGenerationConcurrentListener<T> listener, CountDownLatch latch, T poisonObject) {
         this.queue = queue;
         this.listener = listener;
         this.latch = latch;
