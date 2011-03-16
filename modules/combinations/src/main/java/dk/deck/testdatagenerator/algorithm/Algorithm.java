@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package dk.deck.testdatagenerator;
+package dk.deck.testdatagenerator.algorithm;
 
 import java.util.Map;
 import java.util.Set;
@@ -12,10 +12,12 @@ import java.util.Set;
  * A small class for static algoritm methods, that are shared.
  * @author Jesper Terkelsen
  */
-public class Calculation {
+public class Algorithm {
 
     /**
-     * Modifies the fieldIndexes for the next position
+     * Modifies the fieldIndexes for the next position.
+     * 
+     * This is bacially a algoritm for matrix traversal
      * 
      * @param fieldIndexes the map to modify
      * @return false if we are at the last position, all positions are reset to 0 adfter this call

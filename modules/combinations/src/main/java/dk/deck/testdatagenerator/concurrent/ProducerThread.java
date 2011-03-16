@@ -5,7 +5,7 @@
 
 package dk.deck.testdatagenerator.concurrent;
 
-import dk.deck.testdatagenerator.Calculation;
+import dk.deck.testdatagenerator.algorithm.Algorithm;
 import dk.deck.testdatagenerator.DataGenerator;
 import dk.deck.testdatagenerator.reflect.ReflectBeanInfo;
 import java.util.ArrayList;
@@ -69,7 +69,7 @@ public class ProducerThread<T> extends Thread{
                     }
                     // listener.onDataGenerated(instance);
                     queue.put(instance);
-                    running = Calculation.advance(fieldIndexes, maxValues, supportedFieldsLocal);
+                    running = Algorithm.advance(fieldIndexes, maxValues, supportedFieldsLocal);
 
                 }
                 queue.put(poisonObject);

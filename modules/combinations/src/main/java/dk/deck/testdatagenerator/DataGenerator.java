@@ -4,6 +4,7 @@
  */
 package dk.deck.testdatagenerator;
 
+import dk.deck.testdatagenerator.algorithm.Algorithm;
 import dk.deck.testdatagenerator.concurrent.ConsumerThread;
 import dk.deck.testdatagenerator.concurrent.CountDownLatchWaitable;
 import dk.deck.testdatagenerator.concurrent.ProducerThread;
@@ -123,7 +124,7 @@ public class DataGenerator<T> {
                 beanInfo.setProperty(instance, property, value);
             }
             listener.onDataGenerated(instance);
-            running = Calculation.advance(fieldIndexes, maxValues, supportedFieldsLocal);
+            running = Algorithm.advance(fieldIndexes, maxValues, supportedFieldsLocal);
         }
 
     }
