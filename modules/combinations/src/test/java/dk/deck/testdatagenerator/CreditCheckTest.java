@@ -21,7 +21,7 @@ public class CreditCheckTest {
         System.out.println("Permuations: " + generator.getNumberOfPermutations());
         generator.generateData(new DataGenerationListener<CreditCheckTestInput>() {
 
-            public void onDataGenerated(CreditCheckTestInput value, int threadNum) {
+            public void onDataGenerated(CreditCheckTestInput value) {
                 System.out.println(value.toString());
                 
                 String account = value.getAccountName();
@@ -54,7 +54,7 @@ public class CreditCheckTest {
         System.out.println("Permuations: " + generator.getNumberOfPermutations());        
         generator.generateData(new DataGenerationListener<CreditCheckTestInput>() {
 
-            public void onDataGenerated(CreditCheckTestInput value, int threadNum) {
+            public void onDataGenerated(CreditCheckTestInput value) {
                 System.out.println(value.toString());
                 
                 String account = value.getAccountName();

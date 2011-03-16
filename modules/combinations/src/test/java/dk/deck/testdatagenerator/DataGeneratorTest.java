@@ -78,8 +78,8 @@ public class DataGeneratorTest {
         generator.disableField("intValue");
         generator.generateData(new DataGenerationListener<TestBean>() {
 
-            public void onDataGenerated(TestBean value, int threadNum) {
-                System.out.println(threadNum + ": " + value.toString());
+            public void onDataGenerated(TestBean value) {
+                System.out.println(value.toString());
                 count = count + 1;
             }
         });
@@ -99,7 +99,7 @@ public class DataGeneratorTest {
         values.add("emustring");
         values.add("gnustring");
         generator.setFieldValues("stringValue", values);
-        Waitable waitable = generator.generateDataConcurent(new DataGenerationListener<TestBean>() {
+        Waitable waitable = generator.generateDataConcurrent(new DataGenerationConcurrentListener<TestBean>() {
 
             public void onDataGenerated(TestBean value, int threadNum) {
                 System.out.println(threadNum + ": " + value.toString());
