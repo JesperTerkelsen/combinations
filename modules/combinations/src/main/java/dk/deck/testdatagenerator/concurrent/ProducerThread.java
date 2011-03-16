@@ -2,9 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package dk.deck.testdatagenerator.concurrent;
 
+import dk.deck.testdatagenerator.DataGenerationListener;
 import dk.deck.testdatagenerator.algorithm.Algorithm;
 import dk.deck.testdatagenerator.DataGenerator;
 import dk.deck.testdatagenerator.reflect.ReflectBeanInfo;
@@ -23,64 +23,46 @@ import java.util.logging.Logger;
  *
  * @author Jesper Terkelsen
  */
-public class ProducerThread<T> extends Thread{
+public class ProducerThread<T> extends Thread {
 
-        private final BlockingQueue<T> queue;
-        private final ReflectBeanInfo<T> beanInfo;
-        private final Map<String, Set<?>> fieldValues;
-        private final Set<String> supportedFields;
-        private final T poisonObject;
+    private final BlockingQueue<T> queue;
+    private final ReflectBeanInfo<T> beanInfo;
+    private final Map<String, Set<?>> fieldValues;
+    private final Set<String> supportedFields;
+    private final T poisonObject;
 
-        public ProducerThread(BlockingQueue<T> queue, ReflectBeanInfo<T> beanInfo, Map<String, Set<?>> fieldValues, Set<String> supportedFields, T poisonObject) {
-            this.queue = queue;
-            this.beanInfo = beanInfo;
-            this.fieldValues = fieldValues;
-            this.supportedFields = supportedFields;
-            this.poisonObject = poisonObject;
-        }
+    public ProducerThread(BlockingQueue<T> queue, ReflectBeanInfo<T> beanInfo, Map<String, Set<?>> fieldValues, Set<String> supportedFields, T poisonObject) {
+        this.queue = queue;
+        this.beanInfo = beanInfo;
+        this.fieldValues = fieldValues;
+        this.supportedFields = supportedFields;
+        this.poisonObject = poisonObject;
+    }
 
-        @Override
-        public void run() {
-            Map<String, Integer> fieldIndexes = new HashMap<String, Integer>();
-            Map<String, Integer> maxValues = new HashMap<String, Integer>();
-            Map<String, List<?>> fieldValuesLocal = new HashMap();
-            for (Entry<String, Set<?>> entry : fieldValues.entrySet()) {
-                String key = entry.getKey();
-                Set<?> value = entry.getValue();
-                fieldValuesLocal.put(key, new ArrayList(value));
-            }
-            Set<String> supportedFieldsLocal = new LinkedHashSet<String>(supportedFields);
+    @Override
+    public void run() {
+        try {
+            Algorithm.generateData(beanInfo, fieldValues, supportedFields, new DataGenerationListener<T>() {
 
-            System.out.println("Generating instances for supported fields");
-            for (String property : supportedFieldsLocal) {
-                System.out.println("Field: " + property + " values: " + fieldValuesLocal.get(property));
-                fieldIndexes.put(property, 0);
-                maxValues.put(property, fieldValuesLocal.get(property).size() - 1);
-            }
-            try {
-                // Algoritm
-                boolean running = true;
-                while (running) {
-
-                    T instance = beanInfo.getType().newInstance();
-                    for (String property : supportedFieldsLocal) {
-                        Object value = fieldValuesLocal.get(property).get(fieldIndexes.get(property));
-                        beanInfo.setProperty(instance, property, value);
+                public void onDataGenerated(T value) {
+                    try {
+                        queue.put(value);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(ProducerThread.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    // listener.onDataGenerated(instance);
-                    queue.put(instance);
-                    running = Algorithm.advance(fieldIndexes, maxValues, supportedFieldsLocal);
-
                 }
+            });
+            // TODO, fix so testcase fails after this.
+        } catch (InstantiationException ex) {
+            Logger.getLogger(DataGenerator.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(DataGenerator.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
                 queue.put(poisonObject);
-
-                // TODO, fix so testcase fails after this.
             } catch (InterruptedException ex) {
-                Logger.getLogger(DataGenerator.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (InstantiationException ex) {
-                Logger.getLogger(DataGenerator.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IllegalAccessException ex) {
-                Logger.getLogger(DataGenerator.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ProducerThread.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
 }

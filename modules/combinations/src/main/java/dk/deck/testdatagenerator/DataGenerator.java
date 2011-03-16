@@ -97,36 +97,7 @@ public class DataGenerator<T> {
      * @param listener The listener will get a callback for ecah instance created.
      */
     public void generateData(DataGenerationListener<T> listener) throws InstantiationException, IllegalAccessException {
-        // Initialization of data
-        Map<String, Integer> fieldIndexes = new HashMap<String, Integer>();
-        Map<String, Integer> maxValues = new HashMap<String, Integer>();
-        Map<String, List<?>> fieldValuesLocal = new HashMap();
-        for (Entry<String, Set<?>> entry : fieldValues.entrySet()) {
-            String key = entry.getKey();
-            Set<?> value = entry.getValue();
-            fieldValuesLocal.put(key, new ArrayList(value));
-        }
-        Set<String> supportedFieldsLocal = new LinkedHashSet<String>(supportedFields);
-
-        System.out.println("Generating instances for supported fields");
-        for (String property : supportedFieldsLocal) {
-            System.out.println("Field: " + property + " values: " + fieldValuesLocal.get(property));
-            fieldIndexes.put(property, 0);
-            maxValues.put(property, fieldValuesLocal.get(property).size() - 1);
-        }
-
-        // Algoritm
-        boolean running = true;
-        while (running) {
-            T instance = beanInfo.getType().newInstance();
-            for (String property : supportedFieldsLocal) {
-                Object value = fieldValuesLocal.get(property).get(fieldIndexes.get(property));
-                beanInfo.setProperty(instance, property, value);
-            }
-            listener.onDataGenerated(instance);
-            running = Algorithm.advance(fieldIndexes, maxValues, supportedFieldsLocal);
-        }
-
+        Algorithm.generateData(beanInfo, fieldValues, supportedFields, listener);
     }
 
     /**
