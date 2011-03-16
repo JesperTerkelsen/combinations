@@ -4,9 +4,10 @@
  */
 package dk.deck.testdatagenerator;
 
+import java.util.Set;
 import dk.deck.testdatagenerator.concurrent.Waitable;
 import dk.deck.testdatagenerator.model.TestBean;
-import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -48,7 +49,7 @@ public class DataGeneratorTest {
     @Test
     public void testGenerateData_0args() throws Exception {
         DataGenerator generator = new DataGenerator(TestBean.class);
-        List<String> values = new ArrayList<String>();
+        Set<String> values = new LinkedHashSet<String>();
         values.add(null);
         values.add("");
         values.add("emustring");
@@ -69,7 +70,7 @@ public class DataGeneratorTest {
     @Test
     public void testGenerateData() throws Exception {
         DataGenerator generator = new DataGenerator(TestBean.class);
-        List<String> values = new ArrayList<String>();
+        Set<String> values = new LinkedHashSet<String>();
         values.add(null);
         values.add("");
         values.add("emustring");
@@ -93,7 +94,7 @@ public class DataGeneratorTest {
     @Test
     public void generateDataConcurent() throws Exception {
         DataGenerator generator = new DataGenerator(TestBean.class);
-        List<String> values = new ArrayList<String>();
+        Set<String> values = new LinkedHashSet<String>();
         values.add(null);
         values.add("");
         values.add("emustring");

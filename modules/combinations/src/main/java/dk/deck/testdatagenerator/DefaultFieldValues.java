@@ -5,18 +5,19 @@
 
 package dk.deck.testdatagenerator;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
- *
+ * Default field values, this class will be used by DataGenerator if no other is supplied.
+ * 
  * @author Jesper Terkelsen
  */
 public class DefaultFieldValues implements FieldValues {
-    public final Map<Class, List<?>> getDefaultFieldValues(){
-        Map<Class, List<?>> defaultValues = new HashMap<Class, List<?>>();
+    public Map<Class, Set<?>> getDefaultFieldValues(){
+        Map<Class, Set<?>> defaultValues = new HashMap<Class, Set<?>>();
         defaultValues.put(boolean.class, getBooleans());
         defaultValues.put(Boolean.class, getWrapperBooleans());
         defaultValues.put(int.class, getIntegers());
@@ -26,16 +27,16 @@ public class DefaultFieldValues implements FieldValues {
         return defaultValues;
     }
     
-    protected List<Float> getFloats(){
-        List<Float> result = new ArrayList<Float>();
+    protected Set<Float> getFloats(){
+        Set<Float> result = new LinkedHashSet<Float>();
         result.add(-0.5f);
         result.add(0.0f);
         result.add(0.5f);
         return result;        
     }
 
-    protected List<Float> getDoubles(){
-        List<Float> result = new ArrayList<Float>();
+    protected Set<Float> getDoubles(){
+        Set<Float> result = new LinkedHashSet<Float>();
         result.add(-0.5f);
         result.add(0.0f);
         result.add(0.5f);
@@ -43,8 +44,8 @@ public class DefaultFieldValues implements FieldValues {
     }
     
     
-    protected List<String> getStrings(){
-        List<String> result = new ArrayList<String>();
+    protected Set<String> getStrings(){
+        Set<String> result = new LinkedHashSet<String>();
         result.add(null);
         result.add("");
         result.add("non empthy string");
@@ -52,31 +53,31 @@ public class DefaultFieldValues implements FieldValues {
     }
     
     
-    protected  List<Integer> getWrapperIntegers(){
-        List<Integer> result = new ArrayList<Integer>();
+    protected  Set<Integer> getWrapperIntegers(){
+        Set<Integer> result = new LinkedHashSet<Integer>();
         result.add(null);
         result.addAll(getIntegers());
         return result;
     }
     
-    protected List<Integer> getIntegers(){
-        List<Integer> result = new ArrayList<Integer>();
+    protected Set<Integer> getIntegers(){
+        Set<Integer> result = new LinkedHashSet<Integer>();
         result.add(-1);
         result.add(0);
         result.add(1);
         return result;
     }
     
-    protected  List<Boolean> getWrapperBooleans(){
-        List<Boolean> result = new ArrayList<Boolean>();
+    protected  Set<Boolean> getWrapperBooleans(){
+        Set<Boolean> result = new LinkedHashSet<Boolean>();
         result.add(null);
         result.addAll(getBooleans());
         return result;
     }
     
     
-    protected  List<Boolean> getBooleans(){
-        List<Boolean> result = new ArrayList<Boolean>();
+    protected  Set<Boolean> getBooleans(){
+        Set<Boolean> result = new LinkedHashSet<Boolean>();
         result.add(Boolean.TRUE);
         result.add(Boolean.FALSE);
         return result;

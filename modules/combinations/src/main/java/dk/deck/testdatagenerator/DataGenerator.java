@@ -29,8 +29,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class DataGenerator<T> {
 
     // Default field values to use on any field
-    private final Map<Class, List<?>> defaultFieldValues;
-    private final Map<String, List<?>> fieldValues = new HashMap<String, List<?>>();
+    private final Map<Class, Set<?>> defaultFieldValues;
+    private final Map<String, Set<?>> fieldValues = new HashMap<String, Set<?>>();
     private final Set<String> supportedFields = new LinkedHashSet<String>();
     private final ReflectBeanInfo<T> beanInfo;
 
@@ -51,7 +51,7 @@ public class DataGenerator<T> {
      * @param propertyName the property name
      * @param fieldValues the possible values
      */
-    public <F> void setFieldValues(String propertyName, List<F> fieldsValues) {
+    public <F> void setFieldValues(String propertyName, Set<F> fieldsValues) {
         // Validate that all the field values are the right tyoe
         // Validate that all the field values are different from each other.
         if (!beanInfo.isWriteable(propertyName)) {
@@ -101,9 +101,9 @@ public class DataGenerator<T> {
         Map<String, Integer> fieldIndexes = new HashMap<String, Integer>();
         Map<String, Integer> maxValues = new HashMap<String, Integer>();
         Map<String, List<?>> fieldValuesLocal = new HashMap();
-        for (Entry<String, List<?>> entry : fieldValues.entrySet()) {
+        for (Entry<String, Set<?>> entry : fieldValues.entrySet()) {
             String key = entry.getKey();
-            List<?> value = entry.getValue();
+            Set<?> value = entry.getValue();
             fieldValuesLocal.put(key, new ArrayList(value));
         }
         Set<String> supportedFieldsLocal = new LinkedHashSet<String>(supportedFields);
@@ -181,7 +181,7 @@ public class DataGenerator<T> {
             // System.out.println("Property " + property);
             Class propertyType = beanInfo.getType(property);
             if (defaultFieldValues.containsKey(propertyType) && beanInfo.isWriteable(property)) {
-                setFieldValues(property, new ArrayList(defaultFieldValues.get(propertyType)));
+                setFieldValues(property, new LinkedHashSet(defaultFieldValues.get(propertyType)));
             }
         }
     }

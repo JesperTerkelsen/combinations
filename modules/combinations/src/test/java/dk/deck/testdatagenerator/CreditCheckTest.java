@@ -5,8 +5,8 @@
 package dk.deck.testdatagenerator;
 
 import dk.deck.testdatagenerator.model.CreditCheckTestInput;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import org.junit.Test;
 
 /**
@@ -38,17 +38,17 @@ public class CreditCheckTest {
     @Test
     public void testCreditCheckWidhParameters() throws InstantiationException, IllegalAccessException {
         DataGenerator generator = new DataGenerator(CreditCheckTestInput.class);
-        List<String> accountNames = new ArrayList<String>();
+        Set<String> accountNames = new LinkedHashSet<String>();
         accountNames.add(null);
         accountNames.add("Big Customer");
         accountNames.add("Litte Customer");
         generator.setFieldValues("accountName", accountNames);
-        List<Integer> currentBalance = new ArrayList<Integer>();
+        Set<Integer> currentBalance = new LinkedHashSet<Integer>();
         currentBalance.add(0);
         currentBalance.add(1000);
         currentBalance.add(100000);
         generator.setFieldValues("currentBalance", currentBalance);
-        List<Integer> newAmount = new ArrayList<Integer>();
+        Set<Integer> newAmount = new LinkedHashSet<Integer>();
         newAmount.add(1000);
         generator.setFieldValues("newAmount", newAmount);     
         System.out.println("Permuations: " + generator.getNumberOfPermutations());        

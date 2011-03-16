@@ -27,11 +27,11 @@ public class ProducerThread<T> extends Thread{
 
         private final BlockingQueue<T> queue;
         private final ReflectBeanInfo<T> beanInfo;
-        private final Map<String, List<?>> fieldValues;
+        private final Map<String, Set<?>> fieldValues;
         private final Set<String> supportedFields;
         private final T poisonObject;
 
-        public ProducerThread(BlockingQueue<T> queue, ReflectBeanInfo<T> beanInfo, Map<String, List<?>> fieldValues, Set<String> supportedFields, T poisonObject) {
+        public ProducerThread(BlockingQueue<T> queue, ReflectBeanInfo<T> beanInfo, Map<String, Set<?>> fieldValues, Set<String> supportedFields, T poisonObject) {
             this.queue = queue;
             this.beanInfo = beanInfo;
             this.fieldValues = fieldValues;
@@ -44,9 +44,9 @@ public class ProducerThread<T> extends Thread{
             Map<String, Integer> fieldIndexes = new HashMap<String, Integer>();
             Map<String, Integer> maxValues = new HashMap<String, Integer>();
             Map<String, List<?>> fieldValuesLocal = new HashMap();
-            for (Entry<String, List<?>> entry : fieldValues.entrySet()) {
+            for (Entry<String, Set<?>> entry : fieldValues.entrySet()) {
                 String key = entry.getKey();
-                List<?> value = entry.getValue();
+                Set<?> value = entry.getValue();
                 fieldValuesLocal.put(key, new ArrayList(value));
             }
             Set<String> supportedFieldsLocal = new LinkedHashSet<String>(supportedFields);
@@ -74,6 +74,7 @@ public class ProducerThread<T> extends Thread{
                 }
                 queue.put(poisonObject);
 
+                // TODO, fix so testcase fails after this.
             } catch (InterruptedException ex) {
                 Logger.getLogger(DataGenerator.class.getName()).log(Level.SEVERE, null, ex);
             } catch (InstantiationException ex) {
