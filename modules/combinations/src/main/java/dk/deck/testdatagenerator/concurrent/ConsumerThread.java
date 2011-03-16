@@ -6,7 +6,7 @@ package dk.deck.testdatagenerator.concurrent;
 
 import dk.deck.testdatagenerator.DataGenerationConcurrentListener;
 import dk.deck.testdatagenerator.DataGenerationListener;
-import dk.deck.testdatagenerator.DataGenerator;
+import dk.deck.testdatagenerator.generator.DataGeneratorImpl;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CountDownLatch;
 import java.util.logging.Level;
@@ -47,7 +47,7 @@ public class ConsumerThread<T> extends Thread {
                 }
             }
         } catch (InterruptedException ex) {
-            Logger.getLogger(DataGenerator.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DataGeneratorImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

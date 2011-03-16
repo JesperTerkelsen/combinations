@@ -4,6 +4,7 @@
  */
 package dk.deck.testdatagenerator;
 
+import dk.deck.testdatagenerator.generator.DataGeneratorImpl;
 import dk.deck.testdatagenerator.model.CreditCheckTestInput;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -17,7 +18,7 @@ public class CreditCheckTest {
 
     @Test
     public void testCreditCheck() throws InstantiationException, IllegalAccessException {
-        DataGenerator generator = new DataGenerator(CreditCheckTestInput.class);
+        DataGenerator generator = DataGeneratorFactory.getDataGenerator(CreditCheckTestInput.class);
         System.out.println("Permuations: " + generator.getNumberOfPermutations());
         generator.generateData(new DataGenerationListener<CreditCheckTestInput>() {
 
@@ -37,7 +38,7 @@ public class CreditCheckTest {
 
     @Test
     public void testCreditCheckWidhParameters() throws InstantiationException, IllegalAccessException {
-        DataGenerator generator = new DataGenerator(CreditCheckTestInput.class);
+        DataGenerator generator = DataGeneratorFactory.getDataGenerator(CreditCheckTestInput.class);
         Set<String> accountNames = new LinkedHashSet<String>();
         accountNames.add(null);
         accountNames.add("Big Customer");

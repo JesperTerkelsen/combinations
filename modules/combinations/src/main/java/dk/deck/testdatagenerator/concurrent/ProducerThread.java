@@ -6,7 +6,7 @@ package dk.deck.testdatagenerator.concurrent;
 
 import dk.deck.testdatagenerator.DataGenerationListener;
 import dk.deck.testdatagenerator.algorithm.Algorithm;
-import dk.deck.testdatagenerator.DataGenerator;
+import dk.deck.testdatagenerator.generator.DataGeneratorImpl;
 import dk.deck.testdatagenerator.reflect.ReflectBeanInfo;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,9 +54,9 @@ public class ProducerThread<T> extends Thread {
             });
             // TODO, fix so testcase fails after this.
         } catch (InstantiationException ex) {
-            Logger.getLogger(DataGenerator.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DataGeneratorImpl.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(DataGenerator.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DataGeneratorImpl.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 queue.put(poisonObject);

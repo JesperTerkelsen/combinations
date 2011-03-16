@@ -48,7 +48,7 @@ public class DataGeneratorTest {
      */
     @Test
     public void testGenerateData_0args() throws Exception {
-        DataGenerator generator = new DataGenerator(TestBean.class);
+        DataGenerator generator = DataGeneratorFactory.getDataGenerator(TestBean.class);
         Set<String> values = new LinkedHashSet<String>();
         values.add(null);
         values.add("");
@@ -69,7 +69,7 @@ public class DataGeneratorTest {
 
     @Test
     public void testGenerateData() throws Exception {
-        DataGenerator generator = new DataGenerator(TestBean.class);
+        DataGenerator generator = DataGeneratorFactory.getDataGenerator(TestBean.class);
         Set<String> values = new LinkedHashSet<String>();
         values.add(null);
         values.add("");
@@ -93,7 +93,7 @@ public class DataGeneratorTest {
 
     @Test
     public void generateDataConcurent() throws Exception {
-        DataGenerator generator = new DataGenerator(TestBean.class);
+        DataGenerator generator = DataGeneratorFactory.getDataGenerator(TestBean.class);
         Set<String> values = new LinkedHashSet<String>();
         values.add(null);
         values.add("");
