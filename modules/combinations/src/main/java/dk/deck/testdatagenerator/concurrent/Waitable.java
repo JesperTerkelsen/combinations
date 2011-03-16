@@ -6,7 +6,7 @@
 package dk.deck.testdatagenerator.concurrent;
 
 /**
- * Wrapper class for a
+ * Wrapper class for that supports waiting for a task to complete
  * @author jt
  */
 public interface Waitable {
