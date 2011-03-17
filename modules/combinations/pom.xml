@@ -7,7 +7,7 @@
     <parent>
         <relativePath>../../</relativePath>
         <groupId>dk.deck.combinations</groupId>
-        <version>0.1</version>
+        <version>0.2-SNAPSHOT</version>
         <artifactId>master</artifactId>
     </parent>
     <properties>
