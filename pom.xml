@@ -38,6 +38,14 @@
     </scm>
 
     <distributionManagement>
+        <repository>
+            <id>local-deployment</id>
+            <url>file://${project.build.directory}/deploy/</url>
+        </repository>
+        <snapshotRepository>
+            <id>local-deployment</id>
+            <url>file://${project.build.directory}/deploy/</url>
+        </snapshotRepository>
     </distributionManagement>
 
     <properties>
