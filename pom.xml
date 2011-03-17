@@ -4,7 +4,7 @@
     <artifactId>master</artifactId>
     <groupId>dk.deck.combinations</groupId>
     <packaging>pom</packaging>
-    <version>0.1</version>
+    <version>0.2-SNAPSHOT</version>
     <name>Combinations master project</name>
     <description>Combinations master project,
         this is the maven master module for the combinations project
